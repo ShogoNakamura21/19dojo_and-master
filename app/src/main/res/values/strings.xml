@@ -4,8 +4,11 @@
     <string name="profile_name">名前</string>
     <string name="profile_git">GIthubアカウント</string>
     <string name="profile_twitter">twitterアカウント</string>
-    <string name="profile_button">作成</string>
+    <string name="profile_button">QRコード作成</string>
     <string name="profile_name_input">Nakamura Shogo</string>
     <string name="profile_git_input">ShogoNakamura21</string>
     <string name="profile_twitter_input">dmx42ranz</string>
+    <string name="profile_button_left">プロフィール登録</string>
+    <string name="profile_button_centor">QRコード表示</string>
+    <string name="profile_button_right">プロフィール一覧</string>
 </resources>
