@@ -7,4 +7,15 @@
         android:layout_height="match_parent"
         tools:context=".ProfileActivity">
 
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:ems="10"
+            android:id="@+id/editText" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="298dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="119dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="79dp" android:layout_marginBottom="388dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
