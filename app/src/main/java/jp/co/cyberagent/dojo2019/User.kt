@@ -18,8 +18,8 @@ class User {
     @ColumnInfo(name = "twi_Id")
     var twiId: String? = null
 
-    override fun toString(): String {
-        return nameId.toString()//orEmpty(), ここをnameIdにすると名前、twiIdにするとtwiになる
-    }
+//    override fun toString(): String {
+//        return nameId.toString()//orEmpty(), ここをnameIdにすると名前、twiIdにするとtwiになる
+//    }
 
 }

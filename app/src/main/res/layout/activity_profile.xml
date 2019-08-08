@@ -7,16 +7,11 @@
         android:layout_height="match_parent"
         tools:context=".ProfileActivity">
 
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text="Name"
-            android:ems="10"
-            android:id="@+id/editText"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="119dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="79dp"
-            app:layout_constraintHorizontal_bias="1.0"
-            android:layout_marginBottom="96dp" app:layout_constraintBottom_toBottomOf="parent"/>
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="392dp"
+            android:layout_height="632dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="32dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/recycler_view" app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
