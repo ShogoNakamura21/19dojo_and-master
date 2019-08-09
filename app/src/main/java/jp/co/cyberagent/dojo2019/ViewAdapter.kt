@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 
 
-class ViewAdapter(private val list: List<RowModel>, private val listener: ListListener,val context: Context) ://contextが使えないから持ってきた（profileactivityから）
+class ViewAdapter(private val list: MutableList<RowModel>, private val listener: ListListener,val context: Context) ://contextが使えないから持ってきた（profileactivityから）
     RecyclerView.Adapter<ViewHolder>() {//generics
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -59,5 +59,9 @@ class ViewAdapter(private val list: List<RowModel>, private val listener: ListLi
 
     interface ListListener {
         fun onClickRow(tappedView: View, rowModel: RowModel)
+    }
+
+    fun addUser(userList: MutableList<RowModel>) {
+        list.addAll(userList)
     }
 }

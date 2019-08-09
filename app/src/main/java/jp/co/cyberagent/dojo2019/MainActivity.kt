@@ -3,6 +3,7 @@ package jp.co.cyberagent.dojo2019
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -15,6 +16,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+
+//        Uri uri = Uri.parse("ca-tech://dojo")
+////        val i = Intent(Intent.ACTION_VIEW, uri)
+////// アプリが見つからなければ、ActivityNotFoundException
+////        startActivity(i)
+
+
 
         val dataStore: SharedPreferences = getSharedPreferences("DataStore", Context.MODE_PRIVATE)//sharedpreのインスタンス生成
 

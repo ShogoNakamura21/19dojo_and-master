@@ -3,6 +3,8 @@ package jp.co.cyberagent.dojo2019
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.AndroidRuntimeException
 import android.view.View
 import android.widget.ImageView
@@ -12,13 +14,19 @@ import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_qrcode.*
+import java.util.ArrayList
+import kotlin.concurrent.thread
 
 
 class QRcodeActivity : AppCompatActivity() {
 
+    var db:AppDatabase? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_qrcode)
+
+        db = AppDatabase.get(this)//databaseに入っている全てのデータを呼び出し
 
         val url = intent.getStringExtra("Url")//mainActivityのvalを読み込む
         val size = 500
@@ -50,6 +58,50 @@ class QRcodeActivity : AppCompatActivity() {
 
     }
 
+
+
+
+    fun save(user_data:String){//読み取ったデータを保存する処理
+
+        val splitResult = user_data.split("ca-tech://dojo/share?iam=", "&tw=", "&gh=")
+
+        val scanName = splitResult[1]//スキャンした名前, String型
+        val scanTwi = splitResult[2]//Twitterアカウント
+        val scanGit = splitResult[3]//Githubアカウント
+
+        //editText.setText(splitResult[1])//splitResult[1]...name, [2]...twitter, [3]...github, データが分かれてるかの確認
+
+        // データモデルを作成
+        val user = User()
+        user.nameId = scanName
+        user.twiId = scanTwi
+        user.gitId = scanGit
+
+        thread {
+            // データを保存
+            db?.userDao()?.insert(user)//name,twi,gitのデータが入っているuserをインサートする
+            // val test = db?.userDao()?.getAll()
+            //test?.get(0)?.nameId//0番目のnameを取ってくる
+            //Log.v("testtest",test?.get(0)?.nameId)//リストをString型に変換して確認したい
+//            Handler(Looper.getMainLooper()).post({
+//                    val array = ArrayList<RowModel>()
+//
+//                    test?.forEach {//testの回数分以下のコードを繰り返す
+//                        val data =RowModel()
+//                        data.nameId = it.nameId
+//                        data.gitId = it.gitId
+//                        data.twiId = it.twiId
+//                        array.add(data)
+//                    }
+//
+
+            //})
+        }
+    }
+
+
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (result != null) {
@@ -58,8 +110,9 @@ class QRcodeActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
 
+                save(result.contents.toString())
                 val intent =Intent(this, ProfileActivity::class.java)
-                intent.putExtra("Result",result.contents)//読み取った結果のデータresult.contentsをProfileActivityに引き渡す
+                //intent.putExtra("Result",result.contents)//読み取った結果のデータresult.contentsをProfileActivityに引き渡す
                 startActivity(intent)
 
             }
@@ -67,7 +120,6 @@ class QRcodeActivity : AppCompatActivity() {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
-
 
 
 }
