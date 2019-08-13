@@ -39,7 +39,7 @@ class ProfileActivity : AppCompatActivity() {
 
         db = AppDatabase.get(this)//databaseに入っている全てのデータを呼び出し
         thread {
-            userData = db?.userDao()?.getAll()!!.toMutableList()//中が(User)で既にデータは入っているこれを(Rowmodelにする)
+            userData = db?.userDao()?.getAll()!!.toMutableList()//中が(User)で既にデータは入っているこれを(Rowmodelにする)...!!はnull許容型をそうじゃなくするもの
             val userList :MutableList<RowModel> = userData.map { user ->
                 RowModel(user.nameId, user.twiId, user.gitId)
             }.toMutableList()

@@ -1,6 +1,7 @@
 package jp.co.cyberagent.dojo2019
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -21,6 +22,7 @@ import kotlin.concurrent.thread
 class QRcodeActivity : AppCompatActivity() {
 
     var db:AppDatabase? = null
+    var user = User()//uri用に追加
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,18 +30,67 @@ class QRcodeActivity : AppCompatActivity() {
 
         db = AppDatabase.get(this)//databaseに入っている全てのデータを呼び出し
 
-        val url = intent.getStringExtra("Url")//mainActivityのvalを読み込む
-        val size = 500
 
-        try{
-            val barcodeEncoder =  BarcodeEncoder() //QRコードをbitmapで作成
-            val bitmap = barcodeEncoder.encodeBitmap(url, BarcodeFormat.QR_CODE, size, size)//urlを変換する
-            val imageViewQrCode = findViewById<View>(R.id.imageView2) as ImageView //qrcode.xmlのimageView2にQRコードを表示
-            imageViewQrCode.setImageBitmap(bitmap)
+        if(intent.getStringExtra("Url") != null){
+            val url1 = intent.getStringExtra("Url")//mainActivityのval...urlを読み込む
 
-        }catch(e: WriterException){
-            throw AndroidRuntimeException("Barcode Error.", e)
+            val result = Uri.parse(url1)
+            user.nameId = result.getQueryParameter("iam")
+            user.gitId = result.getQueryParameter("gh")
+            user.twiId= result.getQueryParameter("tw")
+            val url2 = Uri.Builder().scheme("ca-tech").authority("dojo").path("/share").appendQueryParameter("iam",user.nameId).appendQueryParameter("tw",user.twiId).appendQueryParameter("gh",user.gitId)
+//            "ca-tech://dojo/share?iam="+name+"&tw="+twi+"&gh="+git
+            //↑ここまでuriのtestで追加
+
+            //val url = intent.getStringExtra("Url")//mainActivityのvalを読み込む
+
+            val size = 500
+
+            try{
+                val barcodeEncoder =  BarcodeEncoder() //QRコードをbitmapで作成
+                val bitmap = barcodeEncoder.encodeBitmap(url2.toString(), BarcodeFormat.QR_CODE, size, size)//urlを変換するuriを使うためにurl→url.toString()へ
+                val imageViewQrCode = findViewById<View>(R.id.imageView2) as ImageView //qrcode.xmlのimageView2にQRコードを表示
+                imageViewQrCode.setImageBitmap(bitmap)
+
+            }catch(e: WriterException){
+                throw AndroidRuntimeException("Barcode Error.", e)
+            }
+        }else{//外部QRコードからの読み取りの時の動作
+            val result = Uri.parse(intent.getStringExtra("Result"))
+            user.nameId = result.getQueryParameter("iam")
+            user.gitId = result.getQueryParameter("gh")
+            user.twiId= result.getQueryParameter("tw")
+            val url2 = Uri.Builder().scheme("ca-tech").authority("dojo").path("/share").appendQueryParameter("iam",user.nameId).appendQueryParameter("tw",user.twiId).appendQueryParameter("gh",user.gitId)
+//            "ca-tech://dojo/share?iam="+name+"&tw="+twi+"&gh="+git
+            //↑ここまでuriのtestで追加
+
+            //val url = intent.getStringExtra("Url")//mainActivityのvalを読み込む
+
+            val size = 500
+
+            try{
+                val barcodeEncoder =  BarcodeEncoder() //QRコードをbitmapで作成
+                val bitmap = barcodeEncoder.encodeBitmap(url2.toString(), BarcodeFormat.QR_CODE, size, size)//urlを変換するuriを使うためにurl→url.toString()へ
+                val imageViewQrCode = findViewById<View>(R.id.imageView2) as ImageView //qrcode.xmlのimageView2にQRコードを表示
+                imageViewQrCode.setImageBitmap(bitmap)
+
+                save(intent.getStringExtra("Result"))//☆外部QRから読み込んだデータをデータベースに保存している
+                // これによりプロフィールを開くと読み取った外部QRコードのデータが表示される☆
+
+                //QRcodeActivityを一瞬経由してデータを保存し、プロフィール一覧に飛ばしている
+                val intent =Intent(this, ProfileActivity::class.java)
+                startActivity(intent)
+
+                //Toast.makeText(this, "プロフィール一覧に登録しました", Toast.LENGTH_LONG).show()
+
+            }catch(e: WriterException){
+                throw AndroidRuntimeException("Barcode Error.", e)
+            }
         }
+        //↓test
+        //val url1 = intent.getStringExtra("Url")//mainActivityのval...urlを読み込む
+
+
 
         QrButton.setOnClickListener {
             IntentIntegrator(this).initiateScan();
@@ -63,11 +114,18 @@ class QRcodeActivity : AppCompatActivity() {
 
     fun save(user_data:String){//読み取ったデータを保存する処理
 
-        val splitResult = user_data.split("ca-tech://dojo/share?iam=", "&tw=", "&gh=")
+        //uri用に追加urlを変換
+        val result = Uri.parse(user_data)
+        user.nameId = result.getQueryParameter("iam")
+        user.gitId = result.getQueryParameter("gh")
+        user.twiId= result.getQueryParameter("tw")
 
-        val scanName = splitResult[1]//スキャンした名前, String型
-        val scanTwi = splitResult[2]//Twitterアカウント
-        val scanGit = splitResult[3]//Githubアカウント
+
+        //val splitResult = user_data.split("ca-tech://dojo/share?iam=", "&tw=", "&gh=")
+
+        val scanName = user.nameId//スキャンした名前, String型
+        val scanTwi = user.twiId //Twitterアカウント
+        val scanGit = user.gitId//Githubアカウント
 
         //editText.setText(splitResult[1])//splitResult[1]...name, [2]...twitter, [3]...github, データが分かれてるかの確認
 
@@ -80,22 +138,6 @@ class QRcodeActivity : AppCompatActivity() {
         thread {
             // データを保存
             db?.userDao()?.insert(user)//name,twi,gitのデータが入っているuserをインサートする
-            // val test = db?.userDao()?.getAll()
-            //test?.get(0)?.nameId//0番目のnameを取ってくる
-            //Log.v("testtest",test?.get(0)?.nameId)//リストをString型に変換して確認したい
-//            Handler(Looper.getMainLooper()).post({
-//                    val array = ArrayList<RowModel>()
-//
-//                    test?.forEach {//testの回数分以下のコードを繰り返す
-//                        val data =RowModel()
-//                        data.nameId = it.nameId
-//                        data.gitId = it.gitId
-//                        data.twiId = it.twiId
-//                        array.add(data)
-//                    }
-//
-
-            //})
         }
     }
 

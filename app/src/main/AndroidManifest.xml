@@ -2,9 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="jp.co.cyberagent.dojo2019">
 
-    <uses-permission android:name="android.permission.INTERNET"/> <!--インターネットを使うための許可、webview用-->
-
-
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
             android:allowBackup="true"
@@ -13,6 +11,21 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".Deeplink">
+            <!-- deeplink用に追加 -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                        android:host="dojo"
+                        android:scheme="ca-tech"/> <!-- 飛び先のアドレスを指定(ca-tech://dojo/) -->
+            </intent-filter>
+
+
+        </activity>
         <activity android:name=".WebViewActivity">
         </activity>
         <activity android:name=".ProfileActivity">
@@ -25,16 +38,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
-            <!--deeplink用に追加-->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="ca-tech" android:host="dojo" /><!--飛び先のアドレスを指定(ca-tech://dojo/)-->
-            </intent-filter>
-
-
 
 
         </activity>

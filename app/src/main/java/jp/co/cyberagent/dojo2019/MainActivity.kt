@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         editTextGit.setText(git)
 
         button_save.setOnClickListener {//保存ボタンが押されたときの処理
+
             val name_data = editTextName.text.toString()//名前情報
             val git_data = editTextGit.text.toString()//git情報
             val twi_data = editTextTwi.text.toString()//twitter情報
@@ -57,14 +59,26 @@ class MainActivity : AppCompatActivity() {
 
 
         button_qr.setOnClickListener {
-            val name_data = editText.text.toString()//名前情報
-            val git_data = editTextGit.text.toString()//git情報
-            val twi_data = editTextTwi.text.toString()//twitter情報
 
-            val intent =Intent(this, QRcodeActivity::class.java)
-            val url = "ca-tech://dojo/share?iam="+name_data +"&tw="+ twi_data +"&gh="+ git_data  //nameとgitとtwitterのデータをまとめたもの
-            intent.putExtra("Url",url)//urlをQRcodeActivityに引き渡す
-            startActivity(intent)
+            if (editTextGit.text.toString() == "") {//textGitの内容が空だった場合の処理
+
+                val builder = AlertDialog.Builder(this)//アラートを出す
+                builder.setMessage("GitHubアカウント名は必須です")
+                    .setPositiveButton("閉じる") { dialog, id -> }
+                builder.show()
+            }else {
+
+
+                val name_data = editText.text.toString()//名前情報
+                val git_data = editTextGit.text.toString()//git情報
+                val twi_data = editTextTwi.text.toString()//twitter情報
+
+                val intent = Intent(this, QRcodeActivity::class.java)
+                val url =
+                    "ca-tech://dojo/share?iam=" + name_data + "&tw=" + twi_data + "&gh=" + git_data  //nameとgitとtwitterのデータをまとめたもの
+                intent.putExtra("Url", url)//urlをQRcodeActivityに引き渡す
+                startActivity(intent)
+            }
         }
 
         button_profile.setOnClickListener {//プロフィール一覧に遷移
