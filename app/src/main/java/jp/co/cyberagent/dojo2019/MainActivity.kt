@@ -74,13 +74,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
+        //下のツールバー
+        //登録ボタンは飾り（プロフィール登録のフラグメントを表示）
         button_profile.setOnClickListener {//プロフィール一覧に遷移
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
 
 
-        qr_camera.setOnClickListener {
+        qr_camera.setOnClickListener {//QRコードを読み取るカメラを起動
             IntentIntegrator(this).initiateScan();
         }
 

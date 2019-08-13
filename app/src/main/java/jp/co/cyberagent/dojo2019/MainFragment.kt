@@ -1,12 +1,19 @@
 package jp.co.cyberagent.dojo2019
 
+
 import android.content.Context
-import android.net.Uri
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -16,87 +23,83 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [MainFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [MainFragment.newInstance] factory method to
- * create an instance of this fragment.
  *
  */
 class MainFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private var listener: OnFragmentInteractionListener? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        val dataStore: SharedPreferences? = this.activity?.getSharedPreferences("DataStore", Context.MODE_PRIVATE)//sharedpreのインスタンス生成
+
+        //this.activity?をつけるーactivity上でflagmentを使用するから
+        //this activity.contextのこと→view.contextに変える
+
+        //val button_save = findViewById<Button>(R.id.button_save)
+        //val button_qr = findViewById<Button>(R.id.button_qr)
+        //val editText = findViewById<EditText>(R.id.editTextName)
+
+        val name  = dataStore?.getString("InputName", null)//Sharedpreferenceに保存した名前を取り出す
+        editTextName.setText(name)//editTextNameにセットする
+
+        val twi = dataStore?.getString("InputTwi", null)
+        editTextTwi.setText(twi)
+
+        val git = dataStore?.getString("InputGit", null)
+        editTextGit.setText(git)
+
+        button_save.setOnClickListener {//保存ボタンが押されたときの処理
+
+            val name_data = editTextName.text.toString()//名前情報
+            val git_data = editTextGit.text.toString()//git情報
+            val twi_data = editTextTwi.text.toString()//twitter情報
+
+            val editor = dataStore?.edit()
+            editor?.putString("InputName",name_data)
+            editor?.putString("InputGit",git_data)
+            editor?.putString("InputTwi", twi_data)
+            editor?.apply()
+
+            Toast.makeText(view.context, "保存", Toast.LENGTH_LONG).show()
         }
-    }
 
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
-    }
+        button_qr.setOnClickListener {
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MainFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MainFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+            if (editTextGit.text.toString() == "") {//textGitの内容が空だった場合の処理
+
+                val builder = AlertDialog.Builder(view.context)//アラートを出す
+                builder.setMessage("GitHubアカウント名は必須です")
+                    .setPositiveButton("閉じる") { dialog, id -> }
+                builder.show()
+            }else {
+
+
+                val name_data = editTextName.text.toString()//名前情報
+                val git_data = editTextGit.text.toString()//git情報
+                val twi_data = editTextTwi.text.toString()//twitter情報
+
+                val intent = Intent(view.context, QRcodeActivity::class.java)
+                val url =
+                    "ca-tech://dojo/share?iam=" + name_data + "&tw=" + twi_data + "&gh=" + git_data  //nameとgitとtwitterのデータをまとめたもの
+                intent.putExtra("Url", url)//urlをQRcodeActivityに引き渡す
+                startActivity(intent)
             }
+        }
+
+
+
+
     }
+
+
 }

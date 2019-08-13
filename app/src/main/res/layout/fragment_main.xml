@@ -1,14 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".MainFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context=".MainFragment" android:id="@+id/frameLayout">
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editTextTwi2"
+            android:text="@string/profile_twitter_input"
+            android:layout_marginTop="47dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="47dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="151dp" android:layout_marginBottom="228dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
-
-</FrameLayout>
+            android:text="@string/profile_twitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView8"
+            android:layout_marginTop="17dp"
+            app:layout_constraintTop_toBottomOf="@+id/editTextGit2" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="55dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="244dp" android:layout_marginBottom="31dp"
+            app:layout_constraintBottom_toTopOf="@+id/editTextTwi2"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="@string/profile_git_input"
+            android:ems="10"
+            android:id="@+id/editTextGit2"
+            android:layout_marginTop="103dp"
+            app:layout_constraintTop_toBottomOf="@+id/editTextName3" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="47dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="151dp" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView8"/>
+    <TextView
+            android:text="@string/profile_git"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView7"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="55dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="244dp" android:layout_marginBottom="1dp"
+            app:layout_constraintBottom_toTopOf="@+id/editTextGit2" android:layout_marginTop="54dp"
+            app:layout_constraintTop_toBottomOf="@+id/editTextName3"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editTextName3"
+            android:text="@string/profile_name_input"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="47dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="151dp" android:layout_marginBottom="56dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView7" app:layout_constraintTop_toBottomOf="@+id/textView6"/>
+    <TextView
+            android:text="@string/profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView6" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="336dp"
+            android:layout_marginTop="127dp" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/editTextName3"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
