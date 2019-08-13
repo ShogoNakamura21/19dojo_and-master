@@ -4,8 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.AndroidRuntimeException
 import android.view.View
 import android.widget.ImageView
@@ -15,7 +13,6 @@ import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_qrcode.*
-import java.util.ArrayList
 import kotlin.concurrent.thread
 
 
@@ -23,6 +20,9 @@ class QRcodeActivity : AppCompatActivity() {
 
     var db:AppDatabase? = null
     var user = User()//uri用に追加
+
+    //supportActionBar?.title =  "プロフィール入力画面"//ツールバーのタイトルを変える
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,7 +92,7 @@ class QRcodeActivity : AppCompatActivity() {
 
 
 
-        QrButton.setOnClickListener {
+        qr_camera.setOnClickListener {
             IntentIntegrator(this).initiateScan();
         }
 

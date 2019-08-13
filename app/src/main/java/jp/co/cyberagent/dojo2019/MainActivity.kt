@@ -3,29 +3,22 @@ package jp.co.cyberagent.dojo2019
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.qr_camera
+import kotlinx.android.synthetic.main.activity_main.button_profile
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
-
-//        Uri uri = Uri.parse("ca-tech://dojo")
-////        val i = Intent(Intent.ACTION_VIEW, uri)
-////// アプリが見つからなければ、ActivityNotFoundException
-////        startActivity(i)
-
-
 
         val dataStore: SharedPreferences = getSharedPreferences("DataStore", Context.MODE_PRIVATE)//sharedpreのインスタンス生成
 
@@ -87,5 +80,10 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        qr_camera.setOnClickListener {
+            IntentIntegrator(this).initiateScan();
+        }
+
     }
+
 }

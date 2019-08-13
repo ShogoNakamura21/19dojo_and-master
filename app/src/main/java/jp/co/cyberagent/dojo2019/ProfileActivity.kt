@@ -1,5 +1,6 @@
 package jp.co.cyberagent.dojo2019
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -13,7 +14,11 @@ import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
 import kotlin.concurrent.thread
 import android.webkit.WebView
-
+import android.widget.Toast
+import com.google.zxing.integration.android.IntentIntegrator
+import kotlinx.android.synthetic.main.activity_profile.button_profile
+import kotlinx.android.synthetic.main.activity_profile.button_regist
+import kotlinx.android.synthetic.main.activity_qrcode.*
 
 
 class ProfileActivity : AppCompatActivity() {
@@ -51,6 +56,21 @@ class ProfileActivity : AppCompatActivity() {
         //レイアウトマネージャーを設定（ここで縦方向の標準リストであることを指定）
         mRecyclerView.setLayoutManager( LinearLayoutManager(this))
         mRecyclerView.setAdapter(adapter)
+
+
+//        QrButton.setOnClickListener {
+//            IntentIntegrator(this).initiateScan();
+//        }
+
+
+
+
+        button_regist.setOnClickListener { //登録画面へ遷移
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+
     }
 }
 

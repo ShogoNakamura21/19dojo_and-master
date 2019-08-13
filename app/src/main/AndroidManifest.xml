@@ -26,13 +26,13 @@
 
 
         </activity>
-        <activity android:name=".WebViewActivity">
+        <activity android:name=".WebViewActivity" android:label="Web Browser">
         </activity>
-        <activity android:name=".ProfileActivity">
+        <activity android:name=".ProfileActivity" android:label="プロフィール一覧">
         </activity>
-        <activity android:name=".QRcodeActivity">
+        <activity android:name=".QRcodeActivity" android:label="プロフィール登録">
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:label="プロフィール登録">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
