@@ -3,4 +3,5 @@
     <color name="colorPrimary">#333333</color><!--初期の色#008577　アクションバーの色-->
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="textBackground">#60FFFFFF</color>
 </resources>

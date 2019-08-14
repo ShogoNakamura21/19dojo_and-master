@@ -2,6 +2,8 @@ package jp.co.cyberagent.dojo2019
 
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +49,7 @@ class ProfileFragment : Fragment() {
         adapter = ViewAdapter(userList, object : ViewAdapter.ListListener{
             override fun onClickRow(tappedView: View, rowModel: RowModel) {
                 //アダプターがタップされたときの処理
+
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         },view.context)
@@ -60,7 +63,10 @@ class ProfileFragment : Fragment() {
                 RowModel(user.nameId, user.twiId, user.gitId)
             }.toMutableList()
             adapter.addUser(userList)//adapterにデータが入っている<rowmodel>の配列を渡す
-            adapter.notifyDataSetChanged()//データが来たことをアダプターに教える
+            Handler(Looper.getMainLooper()).post{
+                adapter.notifyDataSetChanged()//データが来たことをアダプターに教える
+            }
+
         }
 
         val mRecyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)

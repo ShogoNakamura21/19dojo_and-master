@@ -29,6 +29,10 @@ private const val ARG_PARAM2 = "param2"
  */
 class QRcodeFragment : Fragment() {
 
+    interface Listner{//fragmentでつくつたデータを他のフラグメントにするには一回Activityに渡さないとダメ//その目印としてListnerを作成した
+        fun move_to_qr(url:String)
+    }
+
 
     var db:AppDatabase? = null
     var user = User()//uri用に追加
@@ -54,14 +58,24 @@ class QRcodeFragment : Fragment() {
         //findBiewById→view.findViewById
 
 
+        //MainFragmentsからとってくる
+        // Bundleを取得する
+        var  url5:String? = null
+        val bundle = arguments
+        // Bundleがセットされていたら値を受け取る
 
-        if(this.activity?.intent?.getStringExtra("Url") != null){//urlがnullではないとき
+        url5 = bundle?.getString("Url")
 
 
 
-            val url1 = this.activity?.intent?.getStringExtra("Url")//mainActivityのval...urlを読み込む
 
-            val result = Uri.parse(url1)
+        if(url5 != null){
+        //if(this.activity?.intent?.getStringExtra("Url") != null){//urlがnullではないとき
+
+
+            //val url1 = this.activity?.intent?.getStringExtra("Url")//mainActivityのval...urlを読み込む
+
+            val result = Uri.parse(url5)
             user.nameId = result.getQueryParameter("iam")
             user.gitId = result.getQueryParameter("gh")
             user.twiId= result.getQueryParameter("tw")

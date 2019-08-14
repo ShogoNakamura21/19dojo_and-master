@@ -12,6 +12,11 @@ interface UserDao {//コピペ
     @Query("SELECT * FROM user")
     fun getAll(): List<User>
 
+
+    //削除用に追加
+    @Query("DELETE FROM user WHERE uid = :id")
+    fun deleteSelect(id: Int)
+
 //    // メソッドの引数をSQLのパラメーターにマッピングするには :引数名 と書く
 //    @Query("SELECT * FROM user WHERE uid IN (:userIds)")
 //    fun loadAllaByIds(vararg userIds: Int): List<User>

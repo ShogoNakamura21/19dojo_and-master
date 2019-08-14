@@ -27,6 +27,8 @@ private const val ARG_PARAM2 = "param2"
  */
 class MainFragment : Fragment() {
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -108,14 +110,25 @@ class MainFragment : Fragment() {
                 val git_data = editTextGit.text.toString()//git情報
                 val twi_data = editTextTwi.text.toString()//twitter情報
 
-                val intent = Intent(view.context, MainActivity::class.java)//元々QrcodeActivity
+                //val intent = Intent(view.context, MainActivity::class.java)//元々QrcodeActivity
                 val url =
                     "ca-tech://dojo/share?iam=" + name_data + "&tw=" + twi_data + "&gh=" + git_data  //nameとgitとtwitterのデータをまとめたもの
-                intent.putExtra("Url", url)//urlをQRcodeActivityに引き渡す(→QRFragmentに渡す)
+                (activity as QRcodeFragment.Listner).move_to_qr(url)
 
-
+                //intent.putExtra("Url", url)//urlをQRcodeActivityに引き渡す(→QRFragmentに渡す)
                 Toast.makeText(view.context, "QRを作成しました",Toast.LENGTH_LONG).show()//this→view.contextへ
-                startActivity(intent)
+                //startActivity(intent)
+
+
+
+//                //Qrcodeフラグメントにurlを渡す
+//                val bundle = Bundle()
+//                // Key/Pairの形で値をセットする
+//                bundle.putString("Url", url)
+//                // Fragmentに値をセットする
+//                val fragment = QRcodeFragment()
+//                fragment.setArguments(bundle)
+
 
 
 

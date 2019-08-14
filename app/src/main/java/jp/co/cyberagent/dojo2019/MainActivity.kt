@@ -14,11 +14,31 @@ import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.concurrent.thread
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() , QRcodeFragment.Listner {
+
+    override fun move_to_qr(url: String) {
+
+        //Qrcodeフラグメントにurlを渡す
+            val bundle = Bundle()
+            // Key/Pairの形で値をセットする
+            bundle.putString("Url", url)
+            // Fragmentに値をセットする
+            val fragment = QRcodeFragment()
+            fragment.setArguments(bundle)
+
+            val fragmentManager = this.getSupportFragmentManager()
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.container, fragment)
+                .addToBackStack(null)
+                .commit()
+
+
+    }
 
 
     var db:AppDatabase? = null
     var user = User()//uri用に追加
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +108,7 @@ class MainActivity : AppCompatActivity() {
 
 
         //下のツールバー
-        //登録ボタンは飾り（プロフィール登録のフラグメントを表示）
+        //プロフィール登録のフラグメントを表示
         button_regist.setOnClickListener{
             val fragment = MainFragment()
             val fragmentManager = this.getSupportFragmentManager()
@@ -99,7 +119,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        button_profile.setOnClickListener {//プロフィール一覧のフラグメントに遷移
+        button_profile.setOnClickListener {//プロフィール一覧のフラグメントを表示
             val fragment = ProfileFragment()
             val fragmentManager = this.getSupportFragmentManager()
             val fragmentTransaction = fragmentManager.beginTransaction()
@@ -111,14 +131,23 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        button_myQR.setOnClickListener{
-            val fragment = QRcodeFragment()
-            val fragmentManager = this.getSupportFragmentManager()
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.container, fragment)
-                .addToBackStack(null)
-                .commit()
-        }
+        //button_myQR.setOnClickListener{//QRcodeのフラグメントを表示
+
+//            //Qrcodeフラグメントにurlを渡す
+//            val bundle = Bundle()
+//            // Key/Pairの形で値をセットする
+//            bundle.putString("Url", url)
+//            // Fragmentに値をセットする
+//            val fragment = QRcodeFragment()
+//            fragment.setArguments(bundle)
+
+//            val fragment = QRcodeFragment()
+//            val fragmentManager = this.getSupportFragmentManager()
+//            val fragmentTransaction = fragmentManager.beginTransaction()
+//            fragmentTransaction.replace(R.id.container, fragment)
+//                .addToBackStack(null)
+//                .commit()
+        //}
 
 
         qr_camera.setOnClickListener {//QRコードを読み取るカメラを起動
@@ -128,6 +157,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun save(user_data:String){//読み取ったデータを保存する処理
+        db = AppDatabase.get(this)//databaseに入っている全てのデータを呼び出し
 
         //uri用に追加urlを変換
         val result = Uri.parse(user_data)

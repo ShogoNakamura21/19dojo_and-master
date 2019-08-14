@@ -19,10 +19,6 @@
                 tools:layout_editor_absoluteX="7dp"/>
         <ImageButton
                 android:layout_width="wrap_content"
-                android:layout_height="55dp" app:srcCompat="@android:drawable/ic_menu_gallery"
-                android:id="@+id/button_myQR" android:layout_weight="1" android:background="#333333"/>
-        <ImageButton
-                android:layout_width="wrap_content"
                 android:layout_height="55dp" app:srcCompat="@android:drawable/ic_menu_camera"
                 android:id="@+id/qr_camera" android:layout_weight="1" android:visibility="visible"
                 android:background="#333333"/>
