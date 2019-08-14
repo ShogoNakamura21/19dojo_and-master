@@ -10,8 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
+import com.google.zxing.integration.android.IntentIntegrator
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlin.concurrent.thread
 
@@ -53,7 +55,10 @@ class QRcodeFragment : Fragment() {
 
 
 
-        if(this.activity?.intent?.getStringExtra("Url") != null){
+        if(this.activity?.intent?.getStringExtra("Url") != null){//urlがnullではないとき
+
+
+
             val url1 = this.activity?.intent?.getStringExtra("Url")//mainActivityのval...urlを読み込む
 
             val result = Uri.parse(url1)
@@ -71,19 +76,21 @@ class QRcodeFragment : Fragment() {
             try{
                 val barcodeEncoder =  BarcodeEncoder() //QRコードをbitmapで作成
                 val bitmap = barcodeEncoder.encodeBitmap(url2.toString(), BarcodeFormat.QR_CODE, size, size)//urlを変換するuriを使うためにurl→url.toString()へ
-                val imageViewQrCode = view.findViewById<View>(R.id.imageView2) as ImageView //qrcode.xmlのimageView2にQRコードを表示
+                val imageViewQrCode = view.findViewById<View>(R.id.imageView) as ImageView //qrcode.xmlのimageView2にQRコードを表示
                 imageViewQrCode.setImageBitmap(bitmap)
 
             }catch(e: WriterException){
                 throw AndroidRuntimeException("Barcode Error.", e)
             }
+
+
         }else{//外部QRコードからの読み取りの時の動作
             val result = Uri.parse(this.activity?.intent?.getStringExtra("Result"))
             user.nameId = result.getQueryParameter("iam")
             user.gitId = result.getQueryParameter("gh")
             user.twiId= result.getQueryParameter("tw")
             val url2 = Uri.Builder().scheme("ca-tech").authority("dojo").path("/share").appendQueryParameter("iam",user.nameId).appendQueryParameter("tw",user.twiId).appendQueryParameter("gh",user.gitId)
-//            "ca-tech://dojo/share?iam="+name+"&tw="+twi+"&gh="+git
+            //"ca-tech://dojo/share?iam="+name+"&tw="+twi+"&gh="+git
             //↑ここまでuriのtestで追加
 
             //val url = intent.getStringExtra("Url")//mainActivityのvalを読み込む
@@ -93,7 +100,7 @@ class QRcodeFragment : Fragment() {
             try{
                 val barcodeEncoder =  BarcodeEncoder() //QRコードをbitmapで作成
                 val bitmap = barcodeEncoder.encodeBitmap(url2.toString(), BarcodeFormat.QR_CODE, size, size)//urlを変換するuriを使うためにurl→url.toString()へ
-                val imageViewQrCode = view.findViewById<View>(R.id.imageView2) as ImageView //qrcode.xmlのimageView2にQRコードを表示
+                val imageViewQrCode = view.findViewById<View>(R.id.imageView) as ImageView //qrcode.xmlのimageView2にQRコードを表示
                 imageViewQrCode.setImageBitmap(bitmap)
 
                 save(this.activity?.intent!!.getStringExtra("Result"))//☆外部QRから読み込んだデータをデータベースに保存している
@@ -101,8 +108,8 @@ class QRcodeFragment : Fragment() {
                 //→ここflagmentに変えてから怪しい
 
                 //QRcodeActivityを一瞬経由してデータを保存し、プロフィール一覧に飛ばしている
-                val intent = Intent(view.context, ProfileActivity::class.java)
-                startActivity(intent)
+                val intent = Intent(view.context, ProfileFragment::class.java)
+                //startActivity(intent)
 
                 //Toast.makeText(this, "プロフィール一覧に登録しました", Toast.LENGTH_LONG).show()
 
@@ -141,6 +148,27 @@ class QRcodeFragment : Fragment() {
         thread {
             // データを保存
             db?.userDao()?.insert(user)//name,twi,gitのデータが入っているuserをインサートする
+        }
+    }
+
+
+    //カメラ
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (result != null) {
+            if (result.contents == null) {
+                Toast.makeText(view?.context, "Cancelled", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(view?.context, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
+
+                save(result.contents.toString())
+                val intent =Intent(view?.context, MainActivity::class.java)//元々ProfilreActivity
+                intent.putExtra("Result",result.contents)//読み取った結果のデータresult.contentsをProfileActivityに引き渡す
+                startActivity(intent)
+
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
     }
 

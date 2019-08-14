@@ -10,10 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_main.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -43,9 +43,10 @@ class MainFragment : Fragment() {
 
         //this.activity?をつけるーactivity上でflagmentを使用するから
         //this activity.contextのこと→view.contextに変える
+        //findViewById→view.findViewByIdにした
 
-        //val button_save = findViewById<Button>(R.id.button_save)
-        //val button_qr = findViewById<Button>(R.id.button_qr)
+        val button_save = view.findViewById<Button>(R.id.button_save)
+        val button_create_qr = view.findViewById<Button>(R.id.button_create_qr)
         //val editText = findViewById<EditText>(R.id.editTextName)
 
         val name  = dataStore?.getString("InputName", null)//Sharedpreferenceに保存した名前を取り出す
@@ -73,7 +74,26 @@ class MainFragment : Fragment() {
         }
 
 
-        button_qr.setOnClickListener {
+        button_save.setOnClickListener {//保存ボタンが押されたときの処理
+
+            val name_data = editTextName.text.toString()//名前情報
+            val git_data = editTextGit.text.toString()//git情報
+            val twi_data = editTextTwi.text.toString()//twitter情報
+
+            val editor = dataStore?.edit()//dataStore→dataStore?へ　＋　editor→editor?へ
+            editor?.putString("InputName",name_data)
+            editor?.putString("InputGit",git_data)
+            editor?.putString("InputTwi", twi_data)
+            editor?.apply()
+
+            Toast.makeText(view.context, "保存",Toast.LENGTH_LONG).show()//this→view.contextへ
+        }
+
+
+
+
+
+        button_create_qr.setOnClickListener {
 
             if (editTextGit.text.toString() == "") {//textGitの内容が空だった場合の処理
 
@@ -88,11 +108,17 @@ class MainFragment : Fragment() {
                 val git_data = editTextGit.text.toString()//git情報
                 val twi_data = editTextTwi.text.toString()//twitter情報
 
-                val intent = Intent(view.context, QRcodeActivity::class.java)
+                val intent = Intent(view.context, MainActivity::class.java)//元々QrcodeActivity
                 val url =
                     "ca-tech://dojo/share?iam=" + name_data + "&tw=" + twi_data + "&gh=" + git_data  //nameとgitとtwitterのデータをまとめたもの
-                intent.putExtra("Url", url)//urlをQRcodeActivityに引き渡す
+                intent.putExtra("Url", url)//urlをQRcodeActivityに引き渡す(→QRFragmentに渡す)
+
+
+                Toast.makeText(view.context, "QRを作成しました",Toast.LENGTH_LONG).show()//this→view.contextへ
                 startActivity(intent)
+
+
+
             }
         }
 

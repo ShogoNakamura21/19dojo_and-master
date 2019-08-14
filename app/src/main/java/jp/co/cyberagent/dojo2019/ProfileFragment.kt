@@ -40,8 +40,6 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
-
         val userList :MutableList<RowModel> = userData.map { user ->
             RowModel(user.nameId, user.twiId, user.gitId)
         }.toMutableList()//Userをrowmodelに　中身なし

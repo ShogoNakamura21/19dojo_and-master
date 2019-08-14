@@ -154,7 +154,7 @@ class QRcodeActivity : AppCompatActivity() {
 
                 save(result.contents.toString())
                 val intent =Intent(this, ProfileActivity::class.java)
-                //intent.putExtra("Result",result.contents)//読み取った結果のデータresult.contentsをProfileActivityに引き渡す
+                intent.putExtra("Result",result.contents)//読み取った結果のデータresult.contentsをProfileActivityに引き渡す
                 startActivity(intent)
 
             }
