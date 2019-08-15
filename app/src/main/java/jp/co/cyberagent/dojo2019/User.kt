@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity
 class User {
     @PrimaryKey(autoGenerate = true)
-    var uid: Int = 0
+    var uid: Int? = null
 
     @ColumnInfo(name = "name_Id")
     var nameId: String? = null//読み取った名前を保存する場所

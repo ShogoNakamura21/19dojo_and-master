@@ -43,7 +43,7 @@ class ProfileFragment : Fragment() {
 
 
         val userList :MutableList<RowModel> = userData.map { user ->
-            RowModel(user.nameId, user.twiId, user.gitId)
+            RowModel(user.nameId, user.twiId, user.gitId,user.uid)
         }.toMutableList()//Userをrowmodelに　中身なし
 
         adapter = ViewAdapter(userList, object : ViewAdapter.ListListener{
@@ -60,7 +60,7 @@ class ProfileFragment : Fragment() {
         thread {
             userData = db?.userDao()?.getAll()!!.toMutableList()//中が(User)で既にデータは入っているこれを(Rowmodelにする)...!!はnull許容型をそうじゃなくするもの
             val userList :MutableList<RowModel> = userData.map { user ->
-                RowModel(user.nameId, user.twiId, user.gitId)
+                RowModel(user.nameId, user.twiId, user.gitId, user.uid)
             }.toMutableList()
             adapter.addUser(userList)//adapterにデータが入っている<rowmodel>の配列を渡す
             Handler(Looper.getMainLooper()).post{

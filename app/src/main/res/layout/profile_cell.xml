@@ -1,41 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background = "@drawable/customborder">
-
-    <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/textViewName" android:textSize="24sp"/>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical"
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="5dp">
+    <!-- 以下に追加 -->
     <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="132dp">
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <!--android:background = "@drawable/customborder"-->
+
+
         <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp" app:srcCompat="@drawable/twitter_icon" android:id="@+id/imageViewTwi"/>
-            <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp" app:srcCompat="@drawable/github_icon" android:id="@+id/imageViewGit"/>
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content" android:id="@+id/textViewName" android:textSize="25sp"
+                    android:textStyle="bold"/>
+            <ImageButton
+                    android:layout_width="33dp"
+                    android:layout_height="match_parent" app:srcCompat="@android:drawable/ic_menu_delete"
+                    android:id="@+id/deleteButton" android:layout_weight="1"
+                    style="?android:attr/borderlessButtonStyle"/>
         </LinearLayout>
         <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="366dp"
-                android:layout_height="match_parent">
-            <TextView
-                    android:text="TextView"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="132dp">
+            <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp" android:id="@+id/textViewTwi" android:textSize="24sp"/>
-            <TextView
-                    android:text="TextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp" android:id="@+id/textViewGit" android:textSize="24sp"/>
+                    android:layout_height="match_parent">
+                <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" app:srcCompat="@drawable/twitter_icon"
+                        android:id="@+id/imageViewTwi"/>
+                <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" app:srcCompat="@drawable/github_icon"
+                        android:id="@+id/imageViewGit"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="366dp"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp" android:id="@+id/textViewTwi" android:textSize="24sp"/>
+                <TextView
+                        android:text="TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp" android:id="@+id/textViewGit" android:textSize="24sp"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</androidx.cardview.widget.CardView>

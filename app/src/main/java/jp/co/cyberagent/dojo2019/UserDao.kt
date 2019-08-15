@@ -14,7 +14,7 @@ interface UserDao {//コピペ
 
 
     //削除用に追加
-    @Query("DELETE FROM user WHERE uid = :id")
+    @Query("DELETE FROM user WHERE uid = :id")//userというデータベーステーブルのuidを削除する
     fun deleteSelect(id: Int)
 
 //    // メソッドの引数をSQLのパラメーターにマッピングするには :引数名 と書く
