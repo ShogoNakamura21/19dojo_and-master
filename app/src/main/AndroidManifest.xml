@@ -32,7 +32,7 @@
         </activity>
         <activity android:name=".QRcodeActivity" android:label="プロフィール登録">
         </activity>
-        <activity android:name=".MainActivity" android:label="プロフィール登録">
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

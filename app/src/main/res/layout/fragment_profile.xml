@@ -13,5 +13,5 @@
             android:id="@+id/recycler_view" app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
             app:layout_constraintTop_toTopOf="parent"
-    />
+            android:layout_marginStart="4dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

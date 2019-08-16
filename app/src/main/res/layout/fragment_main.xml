@@ -1,76 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent"
-                                                   tools:context=".MainFragment" android:id="@+id/constraintLayout">
-    <Button
-            android:text="@string/profile_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/button_save"
-            android:layout_marginTop="32dp"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTwi"
-            android:background="#333333" android:textColor="#ADFFFFFF" android:layout_marginStart="32dp"
-            app:layout_constraintStart_toStartOf="@+id/editTextTwi"/>
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editTextTwi"
-            android:text="@string/profile_twitter_input"
-            app:layout_constraintStart_toStartOf="@+id/textView8" app:layout_constraintTop_toBottomOf="@+id/textView8"/>
-    <TextView
-            android:text="@string/profile_twitter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView8"
-            app:layout_constraintStart_toStartOf="@+id/textView7" android:layout_marginTop="58dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/editTextGit" android:textSize="18sp"/>
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text="@string/profile_git_input"
-            android:ems="10"
-            android:id="@+id/editTextGit"
-            app:layout_constraintStart_toStartOf="@+id/textView7"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/textView7"/>
-    <TextView
-            android:text="@string/profile_git"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView7"
-            android:layout_marginTop="68dp"
-            app:layout_constraintTop_toBottomOf="@+id/editTextName"
-            android:textSize="18sp" android:layout_marginStart="8dp"
-            app:layout_constraintStart_toStartOf="@+id/textView6"/>
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editTextName"
-            android:text="@string/profile_name_input"
-            app:layout_constraintStart_toStartOf="@+id/textView6" app:layout_constraintTop_toBottomOf="@+id/textView6"
-            android:textColor="@color/colorPrimary" android:layout_marginStart="8dp"/>
-    <TextView
-            android:text="@string/profile_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView6"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="104dp" android:layout_marginStart="56dp" android:textSize="18sp"/>
-    <Button
-            android:text="@string/create_Qr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/button_create_qr"
-            app:layout_constraintStart_toEndOf="@+id/button_save" android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/button_save"
-            app:layout_constraintTop_toTopOf="@+id/button_save" android:background="#333333"
-            android:textColor="#ADFFFFFF"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="5dp"
+        android:layout_gravity="center">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MainFragment" android:id="@+id/constraintLayout">
+        <EditText
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editTextTwi"
+                android:text="@string/profile_twitter_input"
+                android:layout_marginStart="18dp"
+                app:layout_constraintStart_toStartOf="@+id/textView8"
+                app:layout_constraintTop_toBottomOf="@+id/textView8"/>
+        <TextView
+                android:text="@string/profile_twitter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView8"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/textView7"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" android:layout_marginTop="85dp"/>
+        <EditText
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="@string/profile_git_input"
+                android:ems="10"
+                android:id="@+id/editTextGit"
+                android:layout_marginStart="18dp"
+                app:layout_constraintStart_toStartOf="@+id/textView7"
+                app:layout_constraintTop_toBottomOf="@+id/editTextName" android:layout_marginTop="80dp"/>
+        <TextView
+                android:text="@string/profile_git"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView7"
+                android:textSize="24sp"
+                app:layout_constraintTop_toBottomOf="@+id/textView6"
+                app:layout_constraintStart_toStartOf="@+id/textView6" android:layout_marginStart="8dp"
+                android:layout_marginTop="95dp"/>
+        <EditText
+                android:layout_width="240dp"
+                android:layout_height="49dp"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editTextName"
+                android:text="@string/profile_name_input"
+                android:layout_marginStart="24dp"
+                app:layout_constraintStart_toStartOf="@+id/textView6"
+                android:layout_marginTop="80dp" app:layout_constraintTop_toBottomOf="@+id/textView"/>
+        <TextView
+                android:text="@string/profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView6"
+                android:textSize="24sp" android:layout_marginTop="50dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/editTextName" android:layout_marginStart="40dp"/>
+        <TextView
+                android:text="Your profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView" android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_marginStart="24dp" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="200dp"
+                android:layout_height="55dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/editTextTwi">
+            <Button
+                    android:text="@string/profile_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button_save"
+                    style="?android:attr/borderlessButtonStyle"
+            />
+            <Button
+                    android:text="@string/create_Qr"
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button_create_qr"
+                    android:textColor="#EF5350"
+                    style="?android:attr/borderlessButtonStyle"
+            />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

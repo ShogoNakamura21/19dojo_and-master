@@ -44,6 +44,9 @@ class MainActivity : AppCompatActivity() , QRcodeFragment.Listner {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+//        setSupportActionBar(toolbar)
+//        supportActionBar?.setTitle("test")
+
         //MainActivityを開くと登録画面が開くようにする
         val fragment = MainFragment()
         val fragmentManager = this.getSupportFragmentManager()
