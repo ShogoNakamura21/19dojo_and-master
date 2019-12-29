@@ -144,6 +144,7 @@ class MainActivity : AppCompatActivity() , QRcodeFragment.Listner {
 //            val fragment = QRcodeFragment()
 //            fragment.setArguments(bundle)
 
+
 //            val fragment = QRcodeFragment()
 //            val fragmentManager = this.getSupportFragmentManager()
 //            val fragmentTransaction = fragmentManager.beginTransaction()
@@ -194,7 +195,9 @@ class MainActivity : AppCompatActivity() , QRcodeFragment.Listner {
             if (result.contents == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
+                //Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "QRを読み取りました" , Toast.LENGTH_LONG).show()
+
 
                 save(result.contents.toString())
                 val intent =Intent(this, MainActivity::class.java)
